@@ -772,6 +772,8 @@ while good_userSel == 0:
 
 		i = int(solutions[-1][0])+1
 		ebest = weight_mota*(float(solutions[int(solutions[-1][-1])+1][-8])) + weight_motp*float(solutions[int(solutions[-1][-1])+1][-7])
+		if ebest == 0:
+			ebest -= 10
 		eprev = ebest
 
 		while i < max_iterations:
@@ -800,6 +802,10 @@ while good_userSel == 0:
 
 			enew = weight_mota*float(mota) + weight_motp*motp
 			print 'New energy : ' + str(enew)
+
+			if enew == 0:
+				enew -= 10
+				print 'Tracker produced no results'
 
 			if enew > ebest and enew != 0:
 				print 'NEW BEST!!!'
