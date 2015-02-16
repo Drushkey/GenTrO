@@ -761,7 +761,7 @@ while good_userSel == 0:
 		if include_homo_altitude_mod == 1:
 			prevelev = solutions[(int(solutions[-1][-1]))+1][(len(prevsol)+1):(len(prevsol)+5)]
 		if shift_gt_homo == 1:
-			prevshift = solutions[(int(solutions[-1][-1]))+1][-8]
+			prevshift = solutions[(int(solutions[-1][-1]))+1][-10]
 		else:
 			prevshift = 0
 
@@ -772,15 +772,33 @@ while good_userSel == 0:
 
 		i = int(solutions[-1][0])+1
 		ebest = weight_mota*(float(solutions[int(solutions[-1][-1])+1][-8])) + weight_motp*float(solutions[int(solutions[-1][-1])+1][-7])
+		if ebest == 0:
+			ebest -= 10
 		eprev = ebest
 
 		while i < max_iterations:
 			print 'Iteration : ' + str(i)
 
-			if delta_i >= (maxDeltaI * (t_init - (lamda * math.log(1+i)))):
-				print delta_i + ' iterations since last improvement. Changing permutation size from ' + relative_change + ' to ' + relative_change/2 + ' .'
+			if delta_i >= (maxDeltaI * ((t_init - (lamda * math.log(1+i)))/t_init)):
+				print str(delta_i) + ' iterations since last improvement. Changing permutation size from ' + str(relative_change) + ' to ' + str(relative_change/2) + ' and moving back to best parameters.'
 				delta_i = 0
 				relative_change = relative_change/2
+				solutions = []
+				with open(storage_filename, 'rb') as storagefile:
+					csvreader = csv.reader(storagefile, delimiter=' ')
+					for row in csvreader:
+						solutions.append(row)
+
+				#Extract best solution
+				prevsol,prevelev,prevshift = [],[],[]
+				prevsol = solutions[(int(solutions[-1][-1]))+1][1:(len(varParamArray)+1)]
+
+				if include_homo_altitude_mod == 1:
+					prevelev = solutions[(int(solutions[-1][-1]))+1][(len(prevsol)+1):(len(prevsol)+5)]
+				if shift_gt_homo == 1:
+					prevshift = solutions[(int(solutions[-1][-1]))+1][-10]
+				else:
+					prevshift = 0
 
 			if os.path.isfile(sqlite_filename):
 				removal = 'rm ' + sqlite_filename
@@ -800,6 +818,10 @@ while good_userSel == 0:
 
 			enew = weight_mota*float(mota) + weight_motp*motp
 			print 'New energy : ' + str(enew)
+
+			if enew == 0:
+				enew -= 10
+				print 'Tracker produced no results'
 
 			if enew > ebest and enew != 0:
 				print 'NEW BEST!!!'
