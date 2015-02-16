@@ -1,0 +1,6 @@
+Scene,feature-quality,min-feature-distanceklt,window-size,pyramid-level,ndisplacements,min-feature-displacement,acceleration-bound,deviation-bound,smoothing-halfwidth,min-tracking-error,min-feature-time,mm-connection-distance,mm-segmentation-distance,min-nfeatures-group
+Rosemont,0.320505,5.062814,4,3,3,0.062353,2.871993,0.503294,1,0.248403,18,0.528781,0.763695,2.935724
+NY,0.357158,5.45344,3,3,2,0.018887,2.267209,0.491715,1,0.101641,5,0.5,0.1,1.52335
+Poly,0.074814,5.252689,3,3,2,0.012625,3,0.026402,0,0.16224,5,0.5,0.186139,3.15919
+Atrium,0.394859,5.315707,5,3,2,0,2.946452,0.345317,0,0.085477,5,2.209789,1.594781,1.46457
+Average,0.286834,5.2711625,3.75,3,2.25,0.02346625,2.7714135,0.341682,0.5,0.14944025,8.25,0.9346425,0.66115375,2.2707085
